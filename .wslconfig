@@ -1,0 +1,3 @@
+[wsl]
+memory=8GB
+processors=2

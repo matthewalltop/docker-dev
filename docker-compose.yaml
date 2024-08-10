@@ -1,0 +1,33 @@
+volumes:
+  redis:
+    external: true
+  cosmos:
+    external: true
+
+services:
+  redis:
+    image: redis:latest
+    restart: always
+    tty: true
+    ports:
+      - '6379:6379'
+    command: redis-server --save 60 1 --loglevel warning --requirepass MEGXyL4mB&
+    volumes: 
+      - redis:/data
+  
+  db:
+    container_name: cosmosdb
+    image: "mcr.microsoft.com/cosmosdb/linux/azure-cosmos-emulator"
+    tty: true
+    restart: always
+    mem_limit: 8G
+    cpu_count: 2
+    environment:
+      AZURE_COSMOS_EMULATOR_PARTITION_COUNT: 30
+      AZURE_COSMOS_EMULATOR_ENABLE_DATA_PERSISTENCE: true
+      # AZURE_COSMOS_EMULATOR_IP_ADDRESS_OVERRIDE:  
+    ports:
+      - "8081:8081"
+      - "10250-10255:10250-10255"
+    volumes:
+       - cosmos:/data
