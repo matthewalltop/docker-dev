@@ -6,6 +6,10 @@ volumes:
   cosmos:
     external: true
 
+networks:
+  sb-emulator:
+    driver: bridge
+
 services:
   azurite:
     image: mcr.microsoft.com/azure-storage/azurite
